@@ -157,4 +157,101 @@
   /* Spacing - Extra Large */
   .xl\:py-32 { padding-top: var(--space-32); padding-bottom: var(--space-32); }
   .xl\:gap-16 { gap: var(--space-16); }
+}/* ==
+=== PROJECTS SECTION RESPONSIVE ===== */
+
+/* Mobile devices (320px - 768px) */
+@media (max-width: 767px) {
+  .projects-section {
+    padding: 4rem 0;
+  }
+  
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .project-card {
+    height: 350px;
+  }
+  
+  .project-card.featured {
+    grid-column: span 1;
+    height: 380px;
+  }
+  
+  .project-card.featured .project-preview {
+    height: 180px;
+  }
+  
+  .project-preview {
+    height: 160px;
+  }
+  
+  .project-content {
+    padding: 1rem;
+  }
+  
+  .project-title {
+    font-size: var(--text-lg);
+  }
+  
+  .project-card.featured .project-title {
+    font-size: var(--text-xl);
+  }
+  
+  .project-links {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .project-link {
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .project-overlay {
+    padding: 1.5rem;
+  }
+  
+  .project-overlay-links {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+}
+
+/* Tablet devices (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .project-card.featured {
+    grid-column: span 2;
+  }
+}
+
+/* Large tablets and small desktops (1024px - 1440px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .projects-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .project-card.featured {
+    grid-column: span 2;
+  }
+}
+
+/* Large desktops (1440px+) */
+@media (min-width: 1440px) {
+  .projects-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+  }
+  
+  .project-card.featured {
+    grid-column: span 2;
+  }
 }
