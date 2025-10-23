@@ -255,3 +255,287 @@
     grid-column: span 2;
   }
 }
+/* ===
+== EXPERIENCE SECTION RESPONSIVE STYLES ===== */
+
+/* Mobile devices (320px - 768px) */
+@media (max-width: 767px) {
+  .experience-section {
+    padding: 4rem 0;
+  }
+  
+  .experience-timeline {
+    padding: 1rem 0;
+  }
+  
+  /* Single column layout for mobile */
+  .experience-timeline::before {
+    left: 20px;
+    transform: none;
+  }
+  
+  .experience-item {
+    flex-direction: row !important;
+    margin-bottom: 3rem;
+    padding-left: 60px;
+  }
+  
+  .experience-item .experience-card {
+    margin: 0 !important;
+    max-width: 100%;
+  }
+  
+  .timeline-marker {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+  }
+  
+  .timeline-dot {
+    width: 16px;
+    height: 16px;
+    border-width: 2px;
+  }
+  
+  .timeline-line {
+    width: 2px;
+    height: 80px;
+    margin-top: 8px;
+  }
+  
+  /* Remove card arrows on mobile */
+  .experience-card::after {
+    display: none;
+  }
+  
+  .experience-card {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  .experience-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .company-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+  }
+  
+  .company-icon {
+    font-size: 1.25rem;
+  }
+  
+  .position-title {
+    font-size: var(--text-lg);
+  }
+  
+  .company-name {
+    font-size: var(--text-base);
+  }
+  
+  .experience-description {
+    font-size: var(--text-sm);
+  }
+  
+  .achievements-list li {
+    font-size: var(--text-xs);
+    padding-left: 1rem;
+  }
+  
+  .experience-technologies .tech-tag {
+    font-size: 0.625rem;
+    padding: 0.2rem 0.5rem;
+  }
+  
+  /* Simplified animations for mobile */
+  .experience-item:nth-child(odd).animate-in,
+  .experience-item:nth-child(even).animate-in {
+    animation: slideInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* Tablet devices (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .experience-section {
+    padding: 5rem 0;
+  }
+  
+  .experience-timeline {
+    max-width: 700px;
+  }
+  
+  .experience-card {
+    max-width: 320px;
+    padding: 1.75rem;
+  }
+  
+  .experience-item {
+    gap: 1.5rem;
+  }
+  
+  .experience-item:nth-child(odd) .experience-card {
+    margin-right: 1.5rem;
+  }
+  
+  .experience-item:nth-child(even) .experience-card {
+    margin-left: 1.5rem;
+  }
+  
+  .position-title {
+    font-size: var(--text-lg);
+  }
+  
+  .company-name {
+    font-size: var(--text-base);
+  }
+  
+  .experience-description {
+    font-size: var(--text-sm);
+  }
+  
+  .achievements-list li {
+    font-size: var(--text-sm);
+  }
+}
+
+/* Large tablets and small desktops (1024px - 1440px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .experience-timeline {
+    max-width: 800px;
+  }
+  
+  .experience-card {
+    max-width: 380px;
+  }
+}
+
+/* Large desktops (1440px+) */
+@media (min-width: 1440px) {
+  .experience-section {
+    padding: 8rem 0;
+  }
+  
+  .experience-timeline {
+    max-width: 1000px;
+  }
+  
+  .experience-card {
+    max-width: 450px;
+    padding: 2.5rem;
+  }
+  
+  .experience-item {
+    gap: 3rem;
+    margin-bottom: 5rem;
+  }
+  
+  .experience-item:nth-child(odd) .experience-card {
+    margin-right: 3rem;
+  }
+  
+  .experience-item:nth-child(even) .experience-card {
+    margin-left: 3rem;
+  }
+  
+  .position-title {
+    font-size: var(--text-2xl);
+  }
+  
+  .company-name {
+    font-size: var(--text-xl);
+  }
+  
+  .experience-description {
+    font-size: var(--text-lg);
+  }
+  
+  .achievements-list li {
+    font-size: var(--text-base);
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (max-width: 1023px) and (orientation: landscape) {
+  .experience-section {
+    padding: 3rem 0;
+  }
+  
+  .experience-item {
+    margin-bottom: 2.5rem;
+  }
+  
+  .experience-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .experience-card:hover {
+    transform: none;
+    border-color: var(--border-color);
+    box-shadow: var(--shadow-card);
+  }
+  
+  .experience-card:active {
+    transform: translateY(-4px);
+    border-color: var(--border-neon);
+    box-shadow: var(--shadow-card-hover);
+  }
+  
+  .experience-technologies .tech-tag:hover {
+    transform: none;
+    background: rgba(139, 92, 246, 0.1);
+    border-color: rgba(139, 92, 246, 0.2);
+    box-shadow: none;
+  }
+  
+  .achievements-list li:hover {
+    color: var(--text-secondary);
+  }
+  
+  .achievements-list li:hover::before {
+    color: var(--neon-cyan);
+    text-shadow: none;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .experience-item {
+    transition: opacity 0.3s ease;
+  }
+  
+  .experience-card {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .timeline-dot {
+    transition: none;
+  }
+  
+  .experience-item:nth-child(odd).animate-in,
+  .experience-item:nth-child(even).animate-in {
+    animation: none;
+  }
+  
+  .experience-technologies .tech-tag {
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+}

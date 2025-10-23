@@ -298,6 +298,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new EducationAnimations();
   new ProjectsManager();
   new ProjectInteractions();
+  new ExperienceAnimations();
 });
 
 // ===== ANIMATED STATISTICS COUNTERS =====
@@ -1447,3 +1448,324 @@ class ProjectInteractions {
   }
 }
 
+
+// ===== EXPERIENCE SECTION FUNCTIONALITY =====
+
+class ExperienceAnimations {
+  constructor() {
+    this.experienceItems = document.querySelectorAll('.experience-item');
+    this.experienceTimeline = document.querySelector('.experience-timeline');
+    this.hasAnimated = new Set();
+    this.observer = null;
+
+    this.init();
+  }
+
+  init() {
+    this.createIntersectionObserver();
+    this.observeElements();
+    this.bindHoverEvents();
+    this.animateTimeline();
+  }
+
+  createIntersectionObserver() {
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -100px 0px',
+      threshold: 0.3
+    };
+
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !this.hasAnimated.has(entry.target)) {
+          this.animateExperienceItem(entry.target);
+          this.hasAnimated.add(entry.target);
+        }
+      });
+    }, options);
+  }
+
+  observeElements() {
+    // Observe experience items for entrance animations
+    this.experienceItems.forEach(item => {
+      this.observer.observe(item);
+    });
+
+    // Observe timeline for drawing animation
+    if (this.experienceTimeline) {
+      this.observer.observe(this.experienceTimeline);
+    }
+  }
+
+  animateTimeline() {
+    // Animate the timeline line drawing effect
+    if (this.experienceTimeline) {
+      const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.hasAnimated.has('timeline')) {
+            this.experienceTimeline.classList.add('experience-animate-timeline');
+            this.hasAnimated.add('timeline');
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '0px 0px -200px 0px',
+        threshold: 0.1
+      });
+
+      timelineObserver.observe(this.experienceTimeline);
+    }
+  }
+
+  animateExperienceItem(item) {
+    const index = Array.from(this.experienceItems).indexOf(item);
+
+    // Add entrance animation with stagger
+    setTimeout(() => {
+      item.classList.add('animate-in');
+
+      // Animate the timeline dot
+      const timelineDot = item.querySelector('.timeline-dot');
+      if (timelineDot) {
+        setTimeout(() => {
+          timelineDot.classList.add('experience-pulse-dot');
+        }, 300);
+      }
+
+      // Animate the experience card with reveal effect
+      const experienceCard = item.querySelector('.experience-card');
+      if (experienceCard) {
+        setTimeout(() => {
+          experienceCard.classList.add('experience-animate-card');
+        }, 200);
+      }
+
+      // Animate achievement items with wave effect
+      const achievements = item.querySelectorAll('.achievements-list li');
+      if (achievements.length > 0) {
+        setTimeout(() => {
+          achievements.forEach((achievement, achIndex) => {
+            setTimeout(() => {
+              achievement.classList.add('experience-wave-achievement');
+            }, achIndex * 100);
+          });
+        }, 500);
+      }
+
+      // Animate technology tags with stagger
+      const techTags = item.querySelectorAll('.tech-tag');
+      if (techTags.length > 0) {
+        setTimeout(() => {
+          techTags.forEach((tag, tagIndex) => {
+            setTimeout(() => {
+              tag.classList.add('experience-animate-tag');
+            }, tagIndex * 80);
+          });
+        }, 700);
+      }
+
+    }, index * 300); // Stagger animation by 300ms per item
+  }
+
+  bindHoverEvents() {
+    this.experienceItems.forEach(item => {
+      item.addEventListener('mouseenter', () => this.handleExperienceHover(item));
+      item.addEventListener('mouseleave', () => this.handleExperienceLeave(item));
+    });
+  }
+
+  handleExperienceHover(item) {
+    // Enhanced hover effects
+    const companyIcon = item.querySelector('.company-icon');
+    const timelineDot = item.querySelector('.timeline-dot');
+    const experienceCard = item.querySelector('.experience-card');
+
+    // Company icon rotation and glow
+    if (companyIcon) {
+      companyIcon.style.animation = 'experience-icon-rotate 0.3s ease-out forwards, experience-glow 2s ease-in-out infinite alternate';
+    }
+
+    // Timeline dot pulse effect
+    if (timelineDot) {
+      timelineDot.style.animation = 'experience-dot-pulse 1.5s ease-in-out infinite';
+    }
+
+    // Card glow effect
+    if (experienceCard) {
+      experienceCard.classList.add('experience-glow-card');
+    }
+
+    // Animate achievement items
+    const achievements = item.querySelectorAll('.achievements-list li');
+    achievements.forEach((achievement, index) => {
+      setTimeout(() => {
+        achievement.style.transform = 'translateX(5px)';
+        achievement.style.color = 'var(--text-primary)';
+      }, index * 50);
+    });
+
+    // Animate technology tags
+    const techTags = item.querySelectorAll('.tech-tag');
+    techTags.forEach((tag, index) => {
+      setTimeout(() => {
+        tag.style.transform = 'translateY(-3px) scale(1.05)';
+        tag.style.boxShadow = '0 5px 15px rgba(139, 92, 246, 0.4)';
+      }, index * 30);
+    });
+
+    // Add subtle parallax effect to the entire item
+    item.style.transform = 'translateY(-5px)';
+    item.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+  }
+
+  handleExperienceLeave(item) {
+    // Remove hover effects
+    const companyIcon = item.querySelector('.company-icon');
+    const timelineDot = item.querySelector('.timeline-dot');
+    const experienceCard = item.querySelector('.experience-card');
+
+    if (companyIcon) {
+      companyIcon.style.animation = '';
+    }
+
+    if (timelineDot) {
+      timelineDot.style.animation = '';
+    }
+
+    if (experienceCard) {
+      experienceCard.classList.remove('experience-glow-card');
+    }
+
+    // Reset achievement items
+    const achievements = item.querySelectorAll('.achievements-list li');
+    achievements.forEach(achievement => {
+      achievement.style.transform = '';
+      achievement.style.color = '';
+    });
+
+    // Reset technology tags
+    const techTags = item.querySelectorAll('.tech-tag');
+    techTags.forEach(tag => {
+      tag.style.transform = '';
+      tag.style.boxShadow = '';
+    });
+
+    // Reset item position
+    item.style.transform = '';
+  }
+
+  // Method to add dynamic experience (useful for future enhancements)
+  addExperienceItem(experienceData) {
+    const newItem = this.createExperienceItemHTML(experienceData);
+    if (this.experienceTimeline) {
+      this.experienceTimeline.appendChild(newItem);
+      this.observer.observe(newItem);
+    }
+  }
+
+  createExperienceItemHTML(data) {
+    const item = document.createElement('div');
+    item.className = 'experience-item';
+    item.setAttribute('data-year', data.year);
+
+    item.innerHTML = `
+      <div class="timeline-marker">
+        <div class="timeline-dot"></div>
+        <div class="timeline-line"></div>
+      </div>
+      <div class="experience-card">
+        <div class="experience-header">
+          <div class="experience-date">
+            <span class="date-range">${data.dateRange}</span>
+            <span class="date-duration">${data.duration}</span>
+          </div>
+          <div class="company-logo">
+            <span class="company-icon">${data.icon}</span>
+          </div>
+        </div>
+        <div class="experience-details">
+          <h3 class="position-title">${data.position}</h3>
+          <h4 class="company-name">${data.company}</h4>
+          <p class="experience-description">${data.description}</p>
+          <div class="experience-achievements">
+            <h5>Logros principales:</h5>
+            <ul class="achievements-list">
+              ${data.achievements.map(achievement => 
+                `<li>${achievement}</li>`
+              ).join('')}
+            </ul>
+          </div>
+          <div class="experience-technologies">
+            ${data.technologies.map(tech => 
+              `<span class="tech-tag">${tech}</span>`
+            ).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+
+    return item;
+  }
+
+  // Method to reset animations (useful for testing)
+  reset() {
+    this.hasAnimated.clear();
+
+    this.experienceItems.forEach(item => {
+      item.classList.remove('animate-in');
+
+      const timelineDot = item.querySelector('.timeline-dot');
+      if (timelineDot) {
+        timelineDot.classList.remove('experience-pulse-dot');
+      }
+
+      const experienceCard = item.querySelector('.experience-card');
+      if (experienceCard) {
+        experienceCard.classList.remove('experience-animate-card', 'experience-glow-card');
+      }
+
+      const achievements = item.querySelectorAll('.achievements-list li');
+      achievements.forEach(achievement => {
+        achievement.classList.remove('experience-wave-achievement');
+      });
+
+      const techTags = item.querySelectorAll('.tech-tag');
+      techTags.forEach(tag => {
+        tag.classList.remove('experience-animate-tag');
+      });
+    });
+
+    if (this.experienceTimeline) {
+      this.experienceTimeline.classList.remove('experience-animate-timeline');
+    }
+  }
+
+  // Method to manually trigger animations (useful for testing)
+  triggerAnimations() {
+    this.experienceItems.forEach(item => {
+      this.animateExperienceItem(item);
+    });
+  }
+
+  // Method to highlight specific experience item (useful for navigation)
+  highlightExperienceItem(year) {
+    const targetItem = document.querySelector(`.experience-item[data-year="${year}"]`);
+    if (targetItem) {
+      // Scroll to item
+      const headerHeight = 70;
+      const targetPosition = targetItem.offsetTop - headerHeight - 50;
+
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+
+      // Add highlight effect
+      targetItem.style.animation = 'experience-highlight 1s ease-in-out 3';
+
+      setTimeout(() => {
+        targetItem.style.animation = '';
+      }, 3000);
+    }
+  }
+}

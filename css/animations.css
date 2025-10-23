@@ -965,3 +965,334 @@ YBERPUNK PORTFOLIO ANIMATIONS ===== */
     transform: none;
   }
 }
+/* ===== 
+EXPERIENCE SECTION ANIMATIONS ===== */
+
+/* Timeline Drawing Animation */
+@keyframes experience-timeline-draw {
+  from {
+    height: 0;
+    opacity: 0;
+  }
+  to {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+.experience-animate-timeline::before {
+  animation: experience-timeline-draw 2s ease-out forwards;
+}
+
+/* Experience Item Entrance Animations */
+@keyframes experience-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100px) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes experience-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100px) translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+.experience-item.animate-in:nth-child(odd) {
+  animation: experience-slide-in-left 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.experience-item.animate-in:nth-child(even) {
+  animation: experience-slide-in-right 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Timeline Dot Animations */
+@keyframes experience-dot-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  }
+  50% {
+    transform: scale(1.2);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  }
+}
+
+.experience-pulse-dot {
+  animation: experience-dot-pulse 2s ease-in-out infinite;
+}
+
+/* Experience Card Animations */
+@keyframes experience-card-reveal {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotateY(-10deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+  }
+}
+
+.experience-animate-card {
+  animation: experience-card-reveal 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Company Icon Animations */
+@keyframes experience-icon-rotate {
+  from {
+    transform: rotate(0deg) scale(1);
+  }
+  to {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+
+@keyframes experience-glow {
+  0% {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.8));
+  }
+  100% {
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
+  }
+}
+
+/* Achievement List Animations */
+@keyframes experience-wave-achievement {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.experience-wave-achievement {
+  animation: experience-wave-achievement 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Technology Tag Animations */
+@keyframes experience-tag-bounce {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  60% {
+    transform: translateY(-5px) scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.experience-animate-tag {
+  animation: experience-tag-bounce 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Card Glow Effect */
+@keyframes experience-card-glow {
+  0% {
+    box-shadow: var(--shadow-card);
+  }
+  50% {
+    box-shadow: var(--shadow-card-hover), 0 0 30px rgba(0, 212, 255, 0.3);
+  }
+  100% {
+    box-shadow: var(--shadow-card);
+  }
+}
+
+.experience-glow-card {
+  animation: experience-card-glow 2s ease-in-out infinite;
+}
+
+/* Highlight Animation for Navigation */
+@keyframes experience-highlight {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.02);
+    filter: brightness(1.2);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+}
+
+/* Hover Enhancement Animations */
+@keyframes experience-subtle-vibrate {
+  0%, 100% { transform: translateY(-5px) translateX(0); }
+  25% { transform: translateY(-5px) translateX(-1px); }
+  75% { transform: translateY(-5px) translateX(1px); }
+}
+
+.experience-card:hover {
+  animation: experience-subtle-vibrate 0.3s ease-in-out;
+}
+
+/* Loading State Animation */
+@keyframes experience-skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.experience-skeleton {
+  background: linear-gradient(90deg, 
+    var(--bg-card) 25%, 
+    var(--bg-card-hover) 50%, 
+    var(--bg-card) 75%);
+  background-size: 200px 100%;
+  animation: experience-skeleton-loading 1.5s infinite;
+}
+
+/* Stagger Animation Delays */
+.experience-item:nth-child(1) { animation-delay: 0s; }
+.experience-item:nth-child(2) { animation-delay: 0.2s; }
+.experience-item:nth-child(3) { animation-delay: 0.4s; }
+.experience-item:nth-child(4) { animation-delay: 0.6s; }
+.experience-item:nth-child(5) { animation-delay: 0.8s; }
+
+/* Achievement Item Stagger */
+.achievements-list li:nth-child(1) { animation-delay: 0s; }
+.achievements-list li:nth-child(2) { animation-delay: 0.1s; }
+.achievements-list li:nth-child(3) { animation-delay: 0.2s; }
+.achievements-list li:nth-child(4) { animation-delay: 0.3s; }
+
+/* Technology Tag Stagger */
+.experience-technologies .tech-tag:nth-child(1) { animation-delay: 0s; }
+.experience-technologies .tech-tag:nth-child(2) { animation-delay: 0.08s; }
+.experience-technologies .tech-tag:nth-child(3) { animation-delay: 0.16s; }
+.experience-technologies .tech-tag:nth-child(4) { animation-delay: 0.24s; }
+.experience-technologies .tech-tag:nth-child(5) { animation-delay: 0.32s; }
+.experience-technologies .tech-tag:nth-child(6) { animation-delay: 0.40s; }
+
+/* Responsive Experience Animations */
+@media (max-width: 767px) {
+  .experience-item.animate-in:nth-child(even),
+  .experience-item.animate-in:nth-child(odd) {
+    animation: experience-slide-in-up 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  
+  @keyframes experience-slide-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Reduce animation intensity on mobile */
+  .experience-pulse-dot {
+    animation-duration: 3s;
+  }
+  
+  .experience-glow-card {
+    animation: none;
+  }
+  
+  .experience-card:hover {
+    animation: none;
+  }
+}
+
+/* Tablet Responsive Animations */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .experience-item.animate-in {
+    animation-duration: 0.7s;
+  }
+  
+  .experience-animate-card {
+    animation-duration: 0.5s;
+  }
+}
+
+/* Reduced Motion Preferences */
+@media (prefers-reduced-motion: reduce) {
+  .experience-item,
+  .experience-card,
+  .timeline-dot,
+  .experience-technologies .tech-tag,
+  .achievements-list li {
+    animation: none !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+  }
+  
+  .experience-animate-timeline::before {
+    animation: none;
+    height: 100%;
+    opacity: 1;
+  }
+  
+  .experience-card:hover {
+    animation: none;
+  }
+  
+  .experience-pulse-dot {
+    animation: none;
+  }
+  
+  .experience-glow-card {
+    animation: none;
+  }
+}
+
+/* High Contrast Mode Animations */
+@media (prefers-contrast: high) {
+  .experience-pulse-dot {
+    animation: none;
+    box-shadow: 0 0 0 2px var(--text-primary);
+  }
+  
+  .experience-glow-card {
+    animation: none;
+    border: 2px solid var(--text-primary);
+  }
+}
+
+/* Print Mode - Disable All Animations */
+@media print {
+  .experience-item,
+  .experience-card,
+  .timeline-dot,
+  .experience-technologies .tech-tag,
+  .achievements-list li {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+  
+  .experience-animate-timeline::before {
+    animation: none;
+    height: 100%;
+    opacity: 1;
+  }
+}
