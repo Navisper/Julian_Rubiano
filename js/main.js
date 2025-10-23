@@ -292,4 +292,213 @@ document.addEventListener('DOMContentLoaded', () => {
   new Navigation();
   new ScrollSpy();
   new CTAButtons();
+  new StatisticsCounter();
+  new AboutAnimations();
 });
+
+// ===== ANIMATED STATISTICS COUNTERS =====
+
+class StatisticsCounter {
+  constructor() {
+    this.statNumbers = document.querySelectorAll('.stat-number');
+    this.hasAnimated = new Set();
+    this.observer = null;
+    
+    this.init();
+  }
+  
+  init() {
+    this.createIntersectionObserver();
+    this.observeStatNumbers();
+  }
+  
+  createIntersectionObserver() {
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -100px 0px', // Trigger when element is 100px from bottom of viewport
+      threshold: 0.3
+    };
+    
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !this.hasAnimated.has(entry.target)) {
+          this.animateCounter(entry.target);
+          this.hasAnimated.add(entry.target);
+        }
+      });
+    }, options);
+  }
+  
+  observeStatNumbers() {
+    this.statNumbers.forEach(statNumber => {
+      this.observer.observe(statNumber);
+    });
+  }
+  
+  animateCounter(element) {
+    const target = parseInt(element.getAttribute('data-target'));
+    const duration = 2000; // 2 seconds
+    const startTime = performance.now();
+    const startValue = 0;
+    
+    // Add counting class for visual feedback
+    element.classList.add('counting');
+    
+    const updateCounter = (currentTime) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutCubic = (t) => {
+        return 1 - Math.pow(1 - t, 3);
+      };
+      
+      const easedProgress = easeOutCubic(progress);
+      const currentValue = Math.floor(startValue + (target - startValue) * easedProgress);
+      
+      // Update the display
+      element.textContent = this.formatNumber(currentValue);
+      
+      // Add pulse effect during counting
+      if (progress < 1) {
+        requestAnimationFrame(updateCounter);
+      } else {
+        // Ensure we end with the exact target value
+        element.textContent = this.formatNumber(target);
+        element.classList.remove('counting');
+        
+        // Add completion effect
+        this.addCompletionEffect(element);
+      }
+    };
+    
+    requestAnimationFrame(updateCounter);
+  }
+  
+  formatNumber(num) {
+    // Add formatting for larger numbers if needed
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1) + 'K';
+    }
+    return num.toString();
+  }
+  
+  addCompletionEffect(element) {
+    // Add a subtle glow effect when counter completes
+    element.style.textShadow = '0 0 20px rgba(0, 255, 255, 0.8)';
+    
+    setTimeout(() => {
+      element.style.textShadow = '0 0 15px rgba(0, 255, 255, 0.5)';
+    }, 500);
+  }
+  
+  // Method to reset animations (useful for testing or re-triggering)
+  reset() {
+    this.hasAnimated.clear();
+    this.statNumbers.forEach(element => {
+      element.textContent = '0';
+      element.classList.remove('counting');
+      element.style.textShadow = '';
+    });
+  }
+}
+
+// ===== SCROLL ANIMATIONS FOR ABOUT SECTION =====
+
+class AboutAnimations {
+  constructor() {
+    this.storyParagraphs = document.querySelectorAll('.story-paragraph');
+    this.highlightItems = document.querySelectorAll('.highlight-item');
+    this.aboutImage = document.querySelector('.image-container');
+    this.hasAnimated = new Set();
+    this.observer = null;
+    
+    this.init();
+  }
+  
+  init() {
+    this.createIntersectionObserver();
+    this.observeElements();
+  }
+  
+  createIntersectionObserver() {
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.2
+    };
+    
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !this.hasAnimated.has(entry.target)) {
+          this.animateElement(entry.target);
+          this.hasAnimated.add(entry.target);
+        }
+      });
+    }, options);
+  }
+  
+  observeElements() {
+    // Observe story paragraphs
+    this.storyParagraphs.forEach(paragraph => {
+      this.observer.observe(paragraph);
+    });
+    
+    // Observe highlight items
+    this.highlightItems.forEach(item => {
+      this.observer.observe(item);
+    });
+    
+    // Observe about image
+    if (this.aboutImage) {
+      this.observer.observe(this.aboutImage);
+    }
+  }
+  
+  animateElement(element) {
+    if (element.classList.contains('story-paragraph')) {
+      this.animateStoryParagraph(element);
+    } else if (element.classList.contains('highlight-item')) {
+      this.animateHighlightItem(element);
+    } else if (element.classList.contains('image-container')) {
+      this.animateImage(element);
+    }
+  }
+  
+  animateStoryParagraph(element) {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(30px)';
+    
+    // Get the delay from CSS or calculate based on index
+    const delay = parseFloat(getComputedStyle(element).animationDelay) * 1000 || 0;
+    
+    setTimeout(() => {
+      element.style.transition = 'opacity 0.8s ease-out, transform 0.8s ease-out';
+      element.style.opacity = '1';
+      element.style.transform = 'translateY(0)';
+    }, delay);
+  }
+  
+  animateHighlightItem(element) {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px) scale(0.95)';
+    
+    setTimeout(() => {
+      element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+      element.style.opacity = '1';
+      element.style.transform = 'translateY(0) scale(1)';
+    }, 100);
+  }
+  
+  animateImage(element) {
+    element.style.opacity = '0';
+    element.style.transform = 'scale(0.9) rotate(-2deg)';
+    
+    setTimeout(() => {
+      element.style.transition = 'opacity 1s ease-out, transform 1s ease-out';
+      element.style.opacity = '1';
+      element.style.transform = 'scale(1) rotate(0deg)';
+    }, 200);
+  }
+}
+
