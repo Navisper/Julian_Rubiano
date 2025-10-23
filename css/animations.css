@@ -509,4 +509,213 @@ YBERPUNK PORTFOLIO ANIMATIONS ===== */
   .animate-float {
     animation-duration: 4s;
   }
+}/* ===
+== EDUCATION SECTION ANIMATIONS ===== */
+
+/* Timeline Dot Pulse Animation */
+@keyframes pulse-dot {
+  0%, 100% {
+    transform: translateY(-50%) scale(1);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.6);
+  }
+  50% {
+    transform: translateY(-50%) scale(1.2);
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.8), 0 0 35px rgba(255, 0, 255, 0.4);
+  }
+}
+
+/* Education Card Glow Animation */
+@keyframes education-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(139, 92, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.6), 0 0 35px rgba(139, 92, 246, 0.4);
+  }
+}
+
+/* Timeline Line Animation */
+@keyframes timeline-draw {
+  0% {
+    height: 0%;
+    opacity: 0;
+  }
+  100% {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+/* Education Item Slide In Animation */
+@keyframes education-slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes education-slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(50px) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+/* Tag Shimmer Animation */
+@keyframes tag-shimmer {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+/* Icon Rotation Animation */
+@keyframes education-icon-rotate {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+  100% {
+    transform: scale(1.1) rotate(-5deg);
+  }
+}
+
+/* Date Badge Pulse */
+@keyframes date-badge-pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5), 0 0 30px rgba(0, 212, 255, 0.3);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+  }
+}
+
+/* Highlight Tag Wave Animation */
+@keyframes tag-wave {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+/* Education Content Reveal Animation */
+@keyframes content-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0px);
+  }
+}
+
+/* Timeline Connector Animation */
+@keyframes connector-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 212, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.6), 0 0 25px rgba(0, 212, 255, 0.4);
+  }
+}
+
+/* Education Section Utility Classes */
+.education-animate-timeline {
+  animation: timeline-draw 2s ease-out forwards;
+}
+
+.education-animate-slide-left {
+  animation: education-slide-in-left 0.8s ease-out forwards;
+}
+
+.education-animate-slide-right {
+  animation: education-slide-in-right 0.8s ease-out forwards;
+}
+
+.education-animate-content {
+  animation: content-reveal 0.6s ease-out forwards;
+}
+
+.education-pulse-dot {
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.education-glow-card {
+  animation: education-glow 2s ease-in-out infinite alternate;
+}
+
+.education-pulse-badge {
+  animation: date-badge-pulse 2s ease-in-out infinite;
+}
+
+.education-wave-tags .highlight-tag {
+  animation: tag-wave 2s ease-in-out infinite;
+}
+
+.education-wave-tags .highlight-tag:nth-child(1) { animation-delay: 0.1s; }
+.education-wave-tags .highlight-tag:nth-child(2) { animation-delay: 0.2s; }
+.education-wave-tags .highlight-tag:nth-child(3) { animation-delay: 0.3s; }
+.education-wave-tags .highlight-tag:nth-child(4) { animation-delay: 0.4s; }
+.education-wave-tags .highlight-tag:nth-child(5) { animation-delay: 0.5s; }
+
+/* Responsive Education Animations */
+@media (max-width: 767px) {
+  .education-animate-slide-left,
+  .education-animate-slide-right {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  .education-pulse-dot {
+    animation-duration: 2s;
+  }
+  
+  .education-glow-card {
+    animation-duration: 3s;
+  }
+}
+
+/* Intersection Observer Animation Classes for Education */
+.education-item.animate-in {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.education-item.animate-in:nth-child(even) {
+  animation: education-slide-in-right 0.8s ease-out forwards;
+}
+
+.education-item.animate-in:nth-child(odd) {
+  animation: education-slide-in-left 0.8s ease-out forwards;
+}
+
+@media (max-width: 767px) {
+  .education-item.animate-in:nth-child(even),
+  .education-item.animate-in:nth-child(odd) {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
 }

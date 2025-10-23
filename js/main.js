@@ -675,4 +675,274 @@ class SkillsAnimations {
       this.animateSkillCategory(category);
     });
   }
+}// ===
+== EDUCATION SECTION FUNCTIONALITY =====
+
+class EducationAnimations {
+  constructor() {
+    this.educationItems = document.querySelectorAll('.education-item');
+    this.educationTimeline = document.querySelector('.education-timeline');
+    this.hasAnimated = new Set();
+    this.observer = null;
+    
+    this.init();
+  }
+  
+  init() {
+    this.createIntersectionObserver();
+    this.observeElements();
+    this.bindHoverEvents();
+    this.animateTimeline();
+  }
+  
+  createIntersectionObserver() {
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -100px 0px',
+      threshold: 0.3
+    };
+    
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !this.hasAnimated.has(entry.target)) {
+          this.animateEducationItem(entry.target);
+          this.hasAnimated.add(entry.target);
+        }
+      });
+    }, options);
+  }
+  
+  observeElements() {
+    // Observe education items for entrance animations
+    this.educationItems.forEach(item => {
+      this.observer.observe(item);
+    });
+    
+    // Observe timeline for drawing animation
+    if (this.educationTimeline) {
+      this.observer.observe(this.educationTimeline);
+    }
+  }
+  
+  animateTimeline() {
+    // Animate the timeline line drawing effect
+    if (this.educationTimeline) {
+      const timelineObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !this.hasAnimated.has('timeline')) {
+            this.educationTimeline.classList.add('education-animate-timeline');
+            this.hasAnimated.add('timeline');
+          }
+        });
+      }, {
+        root: null,
+        rootMargin: '0px 0px -200px 0px',
+        threshold: 0.1
+      });
+      
+      timelineObserver.observe(this.educationTimeline);
+    }
+  }
+  
+  animateEducationItem(item) {
+    const index = Array.from(this.educationItems).indexOf(item);
+    
+    // Add entrance animation with stagger
+    setTimeout(() => {
+      item.classList.add('animate-in');
+      
+      // Animate the date badge
+      const dateBadge = item.querySelector('.education-date');
+      if (dateBadge) {
+        setTimeout(() => {
+          dateBadge.classList.add('education-pulse-badge');
+        }, 300);
+      }
+      
+      // Animate the content with reveal effect
+      const content = item.querySelector('.education-content-item');
+      if (content) {
+        setTimeout(() => {
+          content.classList.add('education-animate-content');
+        }, 200);
+      }
+      
+      // Animate highlight tags with wave effect
+      const highlights = item.querySelector('.education-highlights');
+      if (highlights) {
+        setTimeout(() => {
+          highlights.classList.add('education-wave-tags');
+        }, 500);
+      }
+      
+    }, index * 200); // Stagger animation by 200ms per item
+  }
+  
+  bindHoverEvents() {
+    this.educationItems.forEach(item => {
+      item.addEventListener('mouseenter', () => this.handleEducationHover(item));
+      item.addEventListener('mouseleave', () => this.handleEducationLeave(item));
+    });
+  }
+  
+  handleEducationHover(item) {
+    // Enhanced hover effects
+    const icon = item.querySelector('.education-icon');
+    const dateDot = item.querySelector('.education-date::before');
+    const contentItem = item.querySelector('.education-content-item');
+    
+    // Icon rotation and glow
+    if (icon) {
+      icon.style.animation = 'education-icon-rotate 0.3s ease-out forwards, education-glow 2s ease-in-out infinite alternate';
+    }
+    
+    // Content glow effect
+    if (contentItem) {
+      contentItem.classList.add('education-glow-card');
+    }
+    
+    // Animate highlight tags
+    const tags = item.querySelectorAll('.highlight-tag');
+    tags.forEach((tag, index) => {
+      setTimeout(() => {
+        tag.style.transform = 'translateY(-3px) scale(1.05)';
+        tag.style.boxShadow = '0 5px 15px rgba(0, 212, 255, 0.4)';
+      }, index * 50);
+    });
+    
+    // Add subtle parallax effect to the entire item
+    item.style.transform = 'translateY(-8px)';
+    item.style.transition = 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+  }
+  
+  handleEducationLeave(item) {
+    // Remove hover effects
+    const icon = item.querySelector('.education-icon');
+    const contentItem = item.querySelector('.education-content-item');
+    
+    if (icon) {
+      icon.style.animation = '';
+    }
+    
+    if (contentItem) {
+      contentItem.classList.remove('education-glow-card');
+    }
+    
+    // Reset highlight tags
+    const tags = item.querySelectorAll('.highlight-tag');
+    tags.forEach(tag => {
+      tag.style.transform = '';
+      tag.style.boxShadow = '';
+    });
+    
+    // Reset item position
+    item.style.transform = '';
+  }
+  
+  // Method to add dynamic content (useful for future enhancements)
+  addEducationItem(educationData) {
+    const newItem = this.createEducationItemHTML(educationData);
+    if (this.educationTimeline) {
+      this.educationTimeline.appendChild(newItem);
+      this.observer.observe(newItem);
+    }
+  }
+  
+  createEducationItemHTML(data) {
+    const item = document.createElement('div');
+    item.className = 'education-item';
+    item.setAttribute('data-year', data.year);
+    
+    item.innerHTML = `
+      <div class="education-date">
+        <span class="date-range">${data.dateRange}</span>
+        <span class="date-status">${data.status}</span>
+      </div>
+      <div class="education-content-item">
+        <div class="education-icon">
+          <span class="icon">${data.icon}</span>
+        </div>
+        <div class="education-details">
+          <h3 class="education-title">${data.title}</h3>
+          <h4 class="education-institution">${data.institution}</h4>
+          <p class="education-description">${data.description}</p>
+          <div class="education-highlights">
+            ${data.highlights.map(highlight => 
+              `<span class="highlight-tag">${highlight}</span>`
+            ).join('')}
+          </div>
+        </div>
+      </div>
+    `;
+    
+    return item;
+  }
+  
+  // Method to reset animations (useful for testing)
+  reset() {
+    this.hasAnimated.clear();
+    
+    this.educationItems.forEach(item => {
+      item.classList.remove('animate-in');
+      
+      const dateBadge = item.querySelector('.education-date');
+      if (dateBadge) {
+        dateBadge.classList.remove('education-pulse-badge');
+      }
+      
+      const content = item.querySelector('.education-content-item');
+      if (content) {
+        content.classList.remove('education-animate-content', 'education-glow-card');
+      }
+      
+      const highlights = item.querySelector('.education-highlights');
+      if (highlights) {
+        highlights.classList.remove('education-wave-tags');
+      }
+    });
+    
+    if (this.educationTimeline) {
+      this.educationTimeline.classList.remove('education-animate-timeline');
+    }
+  }
+  
+  // Method to manually trigger animations (useful for testing)
+  triggerAnimations() {
+    this.educationItems.forEach(item => {
+      this.animateEducationItem(item);
+    });
+  }
+  
+  // Method to highlight specific education item (useful for navigation)
+  highlightEducationItem(year) {
+    const targetItem = document.querySelector(`.education-item[data-year="${year}"]`);
+    if (targetItem) {
+      // Scroll to item
+      const headerHeight = 70;
+      const targetPosition = targetItem.offsetTop - headerHeight - 50;
+      
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+      
+      // Add highlight effect
+      targetItem.style.animation = 'education-glow 1s ease-in-out 3';
+      
+      setTimeout(() => {
+        targetItem.style.animation = '';
+      }, 3000);
+    }
+  }
 }
+
+// Update the DOMContentLoaded event listener to include EducationAnimations
+document.addEventListener('DOMContentLoaded', () => {
+  new Navigation();
+  new ScrollSpy();
+  new CTAButtons();
+  new StatisticsCounter();
+  new AboutAnimations();
+  new SkillsAnimations();
+  new EducationAnimations(); // Add education animations
+});
