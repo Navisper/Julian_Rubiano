@@ -65,18 +65,29 @@
     - Add active section highlighting in navigation
     - _Requirements: 2.1, 2.5_
 
-- [ ] 4. Build hero section with cyberpunk aesthetics
-  - [ ] 4.1 Create hero layout with name, title, and call-to-action buttons
+- [x] 4. Build hero section with cyberpunk aesthetics
+
+
+
+
+
+  - [x] 4.1 Create hero layout with name, title, and call-to-action buttons
+
+
     - Write hero HTML structure with semantic elements
     - Style hero section with gradient backgrounds and neon effects
     - _Requirements: 1.1, 2.2, 7.1, 7.2_
 
-  - [ ] 4.2 Implement glitch text effect for name display
+  - [x] 4.2 Implement glitch text effect for name display
+
+
     - Code CSS animations for cyberpunk glitch effect
     - Add subtle animation triggers for visual appeal
     - _Requirements: 7.5_
 
-  - [ ] 4.3 Add animated call-to-action buttons with neon styling
+  - [x] 4.3 Add animated call-to-action buttons with neon styling
+
+
     - Create reusable button components with hover effects
     - Implement smooth transitions and glow effects
     - _Requirements: 2.2, 7.2, 7.5_
