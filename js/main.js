@@ -294,6 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new CTAButtons();
   new StatisticsCounter();
   new AboutAnimations();
+  new SkillsAnimations();
 });
 
 // ===== ANIMATED STATISTICS COUNTERS =====
@@ -502,3 +503,176 @@ class AboutAnimations {
   }
 }
 
+
+// ===== SKILLS SECTION FUNCTIONALITY =====
+
+class SkillsAnimations {
+  constructor() {
+    this.skillCategories = document.querySelectorAll('.skill-category');
+    this.skillItems = document.querySelectorAll('.skill-item');
+    this.progressBars = document.querySelectorAll('.progress-bar');
+    this.hasAnimated = new Set();
+    this.observer = null;
+    
+    this.init();
+  }
+  
+  init() {
+    this.createIntersectionObserver();
+    this.observeElements();
+    this.bindHoverEvents();
+  }
+  
+  createIntersectionObserver() {
+    const options = {
+      root: null,
+      rootMargin: '0px 0px -100px 0px',
+      threshold: 0.2
+    };
+    
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !this.hasAnimated.has(entry.target)) {
+          this.animateElement(entry.target);
+          this.hasAnimated.add(entry.target);
+        }
+      });
+    }, options);
+  }
+  
+  observeElements() {
+    // Observe skill categories for entrance animations
+    this.skillCategories.forEach(category => {
+      this.observer.observe(category);
+    });
+    
+    // Observe individual skill items for progress bar animations
+    this.skillItems.forEach(item => {
+      this.observer.observe(item);
+    });
+  }
+  
+  animateElement(element) {
+    if (element.classList.contains('skill-category')) {
+      this.animateSkillCategory(element);
+    } else if (element.classList.contains('skill-item')) {
+      this.animateSkillItem(element);
+    }
+  }
+  
+  animateSkillCategory(category) {
+    // Add entrance animation class
+    category.classList.add('animate-in');
+    
+    // Animate skill items within this category with stagger
+    const skillItems = category.querySelectorAll('.skill-item');
+    skillItems.forEach((item, index) => {
+      setTimeout(() => {
+        item.classList.add('animate-in');
+        this.animateProgressBar(item);
+      }, index * 150); // 150ms stagger between items
+    });
+  }
+  
+  animateSkillItem(item) {
+    // This handles individual skill items that might be observed separately
+    if (!item.classList.contains('animate-in')) {
+      item.classList.add('animate-in');
+      this.animateProgressBar(item);
+    }
+  }
+  
+  animateProgressBar(skillItem) {
+    const progressBar = skillItem.querySelector('.progress-bar');
+    if (!progressBar) return;
+    
+    const level = parseInt(progressBar.getAttribute('data-level'));
+    
+    // Add animated class for shine effect
+    progressBar.classList.add('animated');
+    
+    // Animate the width with a slight delay for better visual effect
+    setTimeout(() => {
+      progressBar.style.width = `${level}%`;
+    }, 200);
+    
+    // Add completion effect when animation finishes
+    setTimeout(() => {
+      this.addProgressCompletionEffect(progressBar);
+    }, 1700); // Match the CSS transition duration
+  }
+  
+  addProgressCompletionEffect(progressBar) {
+    // Add a subtle pulse effect when progress bar completes
+    progressBar.style.boxShadow = '0 0 15px rgba(0, 212, 255, 0.6)';
+    
+    setTimeout(() => {
+      progressBar.style.boxShadow = '';
+    }, 1000);
+  }
+  
+  bindHoverEvents() {
+    this.skillItems.forEach(item => {
+      item.addEventListener('mouseenter', () => this.handleSkillHover(item));
+      item.addEventListener('mouseleave', () => this.handleSkillLeave(item));
+    });
+  }
+  
+  handleSkillHover(item) {
+    // Add enhanced glow effect on hover
+    const skillIcon = item.querySelector('.skill-icon');
+    const progressBar = item.querySelector('.progress-bar');
+    
+    if (skillIcon) {
+      skillIcon.style.animation = 'skill-glow 1.5s ease-in-out infinite alternate';
+    }
+    
+    if (progressBar) {
+      progressBar.style.filter = 'brightness(1.2) saturate(1.3)';
+    }
+    
+    // Add subtle vibration effect
+    item.style.animation = 'subtle-vibrate 0.3s ease-in-out';
+  }
+  
+  handleSkillLeave(item) {
+    // Remove hover effects
+    const skillIcon = item.querySelector('.skill-icon');
+    const progressBar = item.querySelector('.progress-bar');
+    
+    if (skillIcon) {
+      skillIcon.style.animation = '';
+    }
+    
+    if (progressBar) {
+      progressBar.style.filter = '';
+    }
+    
+    item.style.animation = '';
+  }
+  
+  // Method to reset all animations (useful for testing)
+  reset() {
+    this.hasAnimated.clear();
+    
+    this.skillCategories.forEach(category => {
+      category.classList.remove('animate-in');
+    });
+    
+    this.skillItems.forEach(item => {
+      item.classList.remove('animate-in');
+      const progressBar = item.querySelector('.progress-bar');
+      if (progressBar) {
+        progressBar.style.width = '0%';
+        progressBar.classList.remove('animated');
+      }
+    });
+  }
+  
+  // Method to manually trigger animations (useful for testing)
+  triggerAnimations() {
+    this.skillCategories.forEach(category => {
+      this.animateSkillCategory(category);
+    });
+  }
+}
