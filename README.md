@@ -1,6 +1,6 @@
-# Cyberpunk Portfolio - Julián Rubiano Santofimio
+# Portfolio - Julián Rubiano Santofimio
 
-Portafolio web personal con diseño cyberpunk anime inspirado en personajes como Lucy (Cyberpunk 2077) y Chisa (Wuthering Waves).
+Portafolio web personal con diseño cyberpunk anime 
 
 ## Estructura del Proyecto
 
