@@ -83,7 +83,7 @@
   font-family: var(--font-accent);
   font-size: var(--text-4xl);
   font-weight: var(--font-bold);
-  color: var(--text-primary);
+  color: var(--primary-blue); /* Fallback color for browsers that don't support background-clip */
   margin-bottom: 1rem;
   background: var(--gradient-text);
   -webkit-background-clip: text;
@@ -92,12 +92,62 @@
   line-height: var(--leading-tight);
 }
 
+/* Fallback for browsers that don't support background-clip: text */
+@supports not (-webkit-background-clip: text) {
+  .section-title {
+    color: var(--primary-blue);
+    background: none;
+  }
+}
+
 .section-subtitle {
   font-size: var(--text-lg);
   color: var(--text-secondary);
   max-width: 600px;
   margin: 0 auto;
   line-height: var(--leading-relaxed);
+}
+
+/* ===== RESPONSIVE ENHANCEMENTS ===== */
+
+/* Enhanced mobile typography for very small screens */
+@media (max-width: 360px) {
+  .hero-subtitle {
+    font-size: 1rem; /* 16px for better readability */
+    line-height: 1.4;
+  }
+  
+  .section-title {
+    font-size: 1.75rem; /* Slightly smaller on very small screens */
+  }
+  
+  .skill-progress {
+    height: 8px; /* Increased from 6px for better visibility */
+  }
+}
+
+/* Better touch feedback for interactive elements */
+.btn, 
+.nav-menu a, 
+.social-link, 
+.contact-link,
+.skill-item,
+.project-card {
+  -webkit-tap-highlight-color: rgba(0, 212, 255, 0.3);
+  touch-action: manipulation;
+}
+
+/* Reduce animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 }
 
 /* ===== TYPOGRAPHY SYSTEM ===== */

@@ -1296,3 +1296,365 @@ EXPERIENCE SECTION ANIMATIONS ===== */
     opacity: 1;
   }
 }
+
+/* ===== PARALLAX EFFECTS ===== */
+
+.parallax-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120%;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.parallax-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  will-change: transform;
+}
+
+.parallax-layer-1 {
+  background: radial-gradient(circle at 20% 80%, var(--neon-cyan) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, var(--neon-pink) 0%, transparent 50%);
+  animation: aurora 20s ease-in-out infinite alternate;
+}
+
+.parallax-layer-2 {
+  background: linear-gradient(45deg, transparent 30%, var(--primary-blue) 50%, transparent 70%);
+  opacity: 0.05;
+  animation: gradient-shift 15s ease-in-out infinite;
+}
+
+.parallax-layer-3 {
+  background: radial-gradient(circle at 50% 50%, var(--primary-purple) 0%, transparent 60%);
+  opacity: 0.08;
+  animation: pulse-glow 10s ease-in-out infinite alternate;
+}
+
+/* Hero section positioning for parallax */
+#hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+}
+
+.hero-visual {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+}
+
+/* Smooth parallax transitions */
+.parallax-element {
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Reduce parallax on mobile for performance */
+@media (max-width: 767px) {
+  .parallax-background {
+    display: none;
+  }
+  
+  .parallax-element {
+    will-change: auto;
+  }
+}
+
+/* Disable parallax for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .parallax-background,
+  .parallax-layer {
+    animation: none !important;
+    transform: none !important;
+  }
+  
+  .parallax-element {
+    will-change: auto;
+    transform: none !important;
+  }
+}
+
+/* ===== STAGGER ANIMATIONS ===== */
+
+/* Base classes for stagger animations */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.stagger-item.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger animation delays for different elements */
+.skill-item:nth-child(1) { animation-delay: 0s; }
+.skill-item:nth-child(2) { animation-delay: 0.1s; }
+.skill-item:nth-child(3) { animation-delay: 0.2s; }
+.skill-item:nth-child(4) { animation-delay: 0.3s; }
+.skill-item:nth-child(5) { animation-delay: 0.4s; }
+.skill-item:nth-child(6) { animation-delay: 0.5s; }
+
+.project-card:nth-child(1) { animation-delay: 0s; }
+.project-card:nth-child(2) { animation-delay: 0.15s; }
+.project-card:nth-child(3) { animation-delay: 0.3s; }
+.project-card:nth-child(4) { animation-delay: 0.45s; }
+.project-card:nth-child(5) { animation-delay: 0.6s; }
+.project-card:nth-child(6) { animation-delay: 0.75s; }
+
+.experience-item:nth-child(1) { animation-delay: 0s; }
+.experience-item:nth-child(2) { animation-delay: 0.2s; }
+.experience-item:nth-child(3) { animation-delay: 0.4s; }
+.experience-item:nth-child(4) { animation-delay: 0.6s; }
+
+.education-item:nth-child(1) { animation-delay: 0s; }
+.education-item:nth-child(2) { animation-delay: 0.18s; }
+.education-item:nth-child(3) { animation-delay: 0.36s; }
+
+.highlight-item:nth-child(1) { animation-delay: 0s; }
+.highlight-item:nth-child(2) { animation-delay: 0.12s; }
+.highlight-item:nth-child(3) { animation-delay: 0.24s; }
+
+.stat-item:nth-child(1) { animation-delay: 0s; }
+.stat-item:nth-child(2) { animation-delay: 0.1s; }
+.stat-item:nth-child(3) { animation-delay: 0.2s; }
+.stat-item:nth-child(4) { animation-delay: 0.3s; }
+
+.tech-tag:nth-child(1) { animation-delay: 0s; }
+.tech-tag:nth-child(2) { animation-delay: 0.05s; }
+.tech-tag:nth-child(3) { animation-delay: 0.1s; }
+.tech-tag:nth-child(4) { animation-delay: 0.15s; }
+.tech-tag:nth-child(5) { animation-delay: 0.2s; }
+.tech-tag:nth-child(6) { animation-delay: 0.25s; }
+
+/* Bounce animation for scale-in effects */
+@keyframes staggerBounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Wave animation for alternating elements */
+@keyframes staggerWaveLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+@keyframes staggerWaveRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+/* Utility classes for manual stagger control */
+.stagger-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.stagger-slide-up {
+  animation: slideInUp 0.6s ease-out forwards;
+}
+
+.stagger-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.stagger-bounce-in {
+  animation: staggerBounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+.stagger-wave-left {
+  animation: staggerWaveLeft 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.stagger-wave-right {
+  animation: staggerWaveRight 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* Performance optimizations */
+.stagger-container {
+  contain: layout style paint;
+}
+
+.stagger-item {
+  will-change: opacity, transform;
+  backface-visibility: hidden;
+}
+
+/* Remove will-change after animation completes */
+.stagger-item.animation-complete {
+  will-change: auto;
+}
+
+/* Responsive stagger adjustments */
+@media (max-width: 767px) {
+  .stagger-item {
+    animation-duration: 0.4s;
+  }
+  
+  /* Reduce stagger delays on mobile */
+  .skill-item:nth-child(n) { animation-delay: 0s; }
+  .project-card:nth-child(n) { animation-delay: 0s; }
+  .experience-item:nth-child(n) { animation-delay: 0s; }
+  .education-item:nth-child(n) { animation-delay: 0s; }
+  .highlight-item:nth-child(n) { animation-delay: 0s; }
+  .stat-item:nth-child(n) { animation-delay: 0s; }
+  .tech-tag:nth-child(n) { animation-delay: 0s; }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .stagger-item {
+    transition-duration: 0.2s;
+  }
+}
+
+/* Print mode - show all elements */
+@media print {
+  .stagger-item {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+/*
+ ===== LAZY LOADING ANIMATIONS ===== */
+
+/* Image lazy loading states */
+img {
+  transition: opacity 0.3s ease-in-out, filter 0.3s ease-in-out;
+}
+
+img[data-src] {
+  opacity: 0;
+  filter: blur(5px);
+}
+
+img.lazy-loaded {
+  opacity: 1;
+  filter: blur(0);
+}
+
+img.lazy-error {
+  opacity: 0.7;
+  filter: grayscale(100%);
+}
+
+/* Loading placeholder animation */
+.image-placeholder {
+  background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Progressive image enhancement */
+.progressive-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.progressive-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--gradient-primary);
+  opacity: 0.1;
+  z-index: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.progressive-image.loaded::before {
+  opacity: 0;
+}
+
+/* Image fade-in animation */
+@keyframes imageReveal {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.lazy-loaded {
+  animation: imageReveal 0.6s ease-out;
+}
+
+/* Performance optimization classes */
+.will-change-auto {
+  will-change: auto;
+}
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  img {
+    transition: none;
+  }
+  
+  .lazy-loaded {
+    animation: none;
+  }
+  
+  .image-placeholder {
+    animation: none;
+  }
+}

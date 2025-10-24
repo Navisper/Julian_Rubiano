@@ -100,6 +100,95 @@ class Navigation {
   handleScroll() {
     const currentScrollY = window.scrollY;
 
+    // Header background on scroll
+    if (currentScrollY > 50) {
+      this.header.classList.add('scrolled');
+    } else {
+      this.header.classList.remove('scrolled');
+    }
+
+    // Update scroll indicator if it exists
+    if (this.scrollIndicator) {
+      const scrollPercent = (currentScrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      this.scrollIndicator.style.width = `${scrollPercent}%`;
+    }
+
+    this.lastScrollY = currentScrollY;
+  }
+
+  createScrollIndicator() {
+    // Create scroll progress indicator
+    const indicator = document.createElement('div');
+    indicator.className = 'nav-scroll-indicator';
+    this.header.appendChild(indicator);
+    this.scrollIndicator = indicator;
+  }
+}
+
+// ===== SMOOTH SCROLLING FUNCTIONALITY =====
+
+class SmoothScroll {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    // Check if browser supports CSS scroll-behavior
+    if (CSS.supports('scroll-behavior', 'smooth')) {
+      // Use CSS smooth scrolling
+      document.documentElement.style.scrollBehavior = 'smooth';
+    } else {
+      // Implement JavaScript fallback for Safari
+      this.implementJavaScriptScrolling();
+    }
+  }
+
+  implementJavaScriptScrolling() {
+    // Add smooth scrolling for navigation links
+    const navLinks = document.querySelectorAll('a[href^="#"]');
+    
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        const targetId = link.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+        
+        if (targetElement) {
+          this.smoothScrollTo(targetElement);
+        }
+      });
+    });
+  }
+
+  smoothScrollTo(element) {
+    const targetPosition = element.offsetTop - 80; // Account for fixed header
+    const startPosition = window.pageYOffset;
+    const distance = targetPosition - startPosition;
+    const duration = 800;
+    let start = null;
+
+    const animation = (currentTime) => {
+      if (start === null) start = currentTime;
+      const timeElapsed = currentTime - start;
+      const run = this.easeInOutQuad(timeElapsed, startPosition, distance, duration);
+      window.scrollTo(0, run);
+      
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      }
+    };
+
+    requestAnimationFrame(animation);
+  }
+
+  easeInOutQuad(t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t + b;
+    t--;
+    return -c / 2 * (t * (t - 2) - 1) + b;
+    const currentScrollY = window.scrollY;
+
     // Add scrolled class for header styling
     if (currentScrollY > 50) {
       this.header.classList.add('scrolled');
